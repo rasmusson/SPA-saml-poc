@@ -1,0 +1,1 @@
+{"rsync":{"/vagrant":{"type":"rsync","guestpath":"/vagrant","hostpath":"/home/stefan/git/SPA-SAML-demo","disabled":false,"__vagrantfile":true,"owner":"vagrant","group":"vagrant"}}}
