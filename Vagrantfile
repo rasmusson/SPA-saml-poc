@@ -66,36 +66,32 @@ Vagrant.configure("2") do |config|
     end
   end
   config.vm.define "keycloak", autostart: false do |kc|
-    kc.vm.box = "centos/7"
-    kc.vm.provider "virtualbox" do |v|
-      v.memory = 512
-      v.cpus = 1
-    end
-
+    kc.vm.provider "docker" do |d|
+      d.image = "pasing/centos7-ssh"
+      d.has_ssh = true
+      end
     kc.vm.hostname = "keycloak"
     kc.vm.network "forwarded_port", guest: 9990, host: 9990
     kc.vm.network "forwarded_port", guest: 8080, host: 8080
     kc.vm.network :private_network, ip: "192.168.38.3"
 
     kc.vm.provision :shell, path: "scripts/keycloak-setup.sh"
+    kc.vm.provision :shell, path: "scripts/keycloak-start.sh"
     kc.vm.provision :shell, path: "scripts/keycloak-configure-oidc.sh"
 
   end
   config.vm.define "react", autostart: false do |r|
-    r.vm.box = "centos/7"
-    r.vm.provider "virtualbox" do |v|
-      v.memory = 512
-      v.cpus = 1
-    end
+    r.vm.provider "docker" do |d|
+        d.image = "pasing/centos7-ssh"
+        d.has_ssh = true
+      end
 
     r.vm.hostname = "react"
     r.vm.network "forwarded_port", guest: 3000, host: 3000
     r.vm.network :private_network, ip: "192.168.38.4"
 
-    r.vm.provision :shell, path: "scripts/react-open-firewall"
-    r.vm.provision "reload"
-    r.vm.provision :shell, path: "scripts/install-react-demo.sh"
-    r.vm.provision :shell, path: "scripts/start-react-demo.sh", run: "always"
+    r.vm.provision :shell, path: "scripts/install-react-demo.sh", privileged: true
+    r.vm.provision :shell, path: "scripts/start-react-demo.sh", run: "always", privileged: true
 
   end
 end

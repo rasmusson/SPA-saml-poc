@@ -1,1 +1,2 @@
-npm start 
+cd react-oidc-pkce-demo
+nohup npm start & 

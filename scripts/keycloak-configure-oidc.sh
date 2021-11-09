@@ -1,4 +1,4 @@
-export PATH=$PATH:/opt/keycloak/bin
+export PATH=$PATH:/home/vagrant/keycloak/bin
 
 kcadm.sh config credentials --server http://localhost:8080/auth --realm master --user vagrant --password vagrant
 kcadm.sh create realms -s realm=oidcrealm -s enabled=true
