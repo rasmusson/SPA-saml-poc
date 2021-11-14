@@ -1,2 +1,3 @@
 cd react-oidc-pkce-demo
-nohup npm start & 
+nohup npm start &
+sleep 5 

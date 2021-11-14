@@ -8,5 +8,5 @@ kcadm.sh create users -r oidcrealm -s username=test -s enabled=true -o --fields 
 kcadm.sh set-password -r oidcrealm --username test --new-password test
 
 kcadm.sh create clients -r oidcrealm -f - << EOF
-{"clientId" : "oidc-client", "redirectUris": ["http://localhost:3000"], "standardFlowEnabled": true, "publicClient": true, "attributes": {"pkce.code.challenge.method":"S256"}}
+{"clientId" : "oidc-client", "redirectUris": ["http://react:3000"], "standardFlowEnabled": true, "publicClient": true, "attributes": {"pkce.code.challenge.method":"S256"}}
 EOF

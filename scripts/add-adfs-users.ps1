@@ -6,6 +6,6 @@ secedit /export /cfg C:\secconfig.cfg
   rm -force C:\secconfig.cfg -confirm:$false
 
 Import-Module ActiveDirectory
-New-ADUser -SamAccountName test_aduser -GivenName Test -Surname User -Name "Test User" `
+New-ADUser -SamAccountName test -GivenName Test -Surname User -Name "Test User" -Email "test@test.com"`
            -Path "CN=Users,DC=windomain,DC=local" `
            -AccountPassword (ConvertTo-SecureString 'test' -AsPlainText -Force) -Enabled $true
