@@ -5,7 +5,7 @@
 # * vagrant plugin install vagrant-vbguest
 # * vagrant plugin install vagrant-reload
 # * vagrant plugin install vagrant-host-shell
-# * vagrant plugin install vagrant-dns
+# * vagrant plugin install vagrant-timezone
 
 
 
@@ -15,7 +15,7 @@ Vagrant.configure("2") do |config|
   config.vbguest.installer_options = { allow_kernel_upgrade: true }
   config.vbguest.auto_update = false
 
-
+  config.timezone.value = "UTC"
   config.hostmanager.enabled = true
   config.hostmanager.manage_host = true
   config.hostmanager.manage_guest = true
