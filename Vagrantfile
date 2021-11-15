@@ -19,6 +19,26 @@ Vagrant.configure("2") do |config|
   config.hostmanager.enabled = true
   config.hostmanager.manage_host = true
   config.hostmanager.manage_guest = true
+
+  config.vm.define "keycloak", autostart: false do |kc|
+    kc.vm.box = "centos/7"
+    kc.vm.provider "virtualbox" do |v|
+      v.memory = 512
+      v.cpus = 1
+    end
+
+
+    kc.vm.hostname = "keycloak"
+    kc.vm.network :private_network, ip: "192.168.38.3"
+
+    kc.vm.provision :shell, path: "scripts/keycloak-setup.sh"
+    kc.vm.provision :shell, path: "scripts/keycloak-start.sh", run: "always"
+    kc.vm.provision :shell, path: "scripts/keycloak-configure-oidc.sh"
+    kc.vm.provision :shell, path: "scripts/configure-keycloak-adfs-idp.sh"
+    kc.vm.provision "reload"
+
+  end
+
   config.vm.define "adfs", autostart: false do |adfs|
     adfs.vbguest.auto_update = true
     adfs.vm.box = "StefanScherer/windows_2019"
@@ -69,22 +89,7 @@ Vagrant.configure("2") do |config|
       vb.customize ["setextradata", "global", "GUI/SuppressMessages", "all" ]
     end
   end
-  config.vm.define "keycloak", autostart: false do |kc|
-    kc.vm.box = "centos/7"
-    kc.vm.provider "virtualbox" do |v|
-      v.memory = 512
-      v.cpus = 1
-    end
 
-
-    kc.vm.hostname = "keycloak"
-    kc.vm.network :private_network, ip: "192.168.38.3"
-
-    kc.vm.provision :shell, path: "scripts/keycloak-setup.sh"
-    kc.vm.provision :shell, path: "scripts/keycloak-start.sh", run: "always"
-    kc.vm.provision :shell, path: "scripts/keycloak-configure-oidc.sh"
-
-  end
   config.vm.define "react", autostart: false do |r|
 
     r.vm.box = "centos/7"
