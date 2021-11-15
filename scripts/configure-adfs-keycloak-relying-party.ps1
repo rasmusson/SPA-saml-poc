@@ -1,5 +1,6 @@
 . c:\vagrant\scripts\wait-for-ad.ps1
 
+sleep 20
 #WARNING dissabling certificate trust check
 [System.Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}
 

@@ -77,6 +77,7 @@ Vagrant.configure("2") do |config|
     adfs.vm.provision "shell", path: "scripts/add-adfs-users.ps1", privileged: true
     adfs.vm.provision "shell", path: "scripts/configure-adfs-keycloak-relying-party.ps1", privileged: true
 
+    adfs.vm.provision "reload"
     adfs.vm.provision :shell, path: "scripts/wait-for-ad.ps1", run: "always"
 
 
@@ -103,6 +104,7 @@ Vagrant.configure("2") do |config|
 
     r.vm.provision :shell, path: "scripts/install-react-demo.sh", privileged: true
     r.vm.provision :shell, path: "scripts/start-react-demo.sh", run: "always", privileged: true
+    r.vm.provision "reload"
 
   end
 end
