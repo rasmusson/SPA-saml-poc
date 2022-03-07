@@ -33,3 +33,5 @@ Install-ADDSForest `
     -Force:$true
 
 Start-Sleep -m 5000
+
+ADD-WindowsFeature RSAT-Role-Tools
