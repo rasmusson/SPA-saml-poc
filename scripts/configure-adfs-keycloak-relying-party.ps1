@@ -1,7 +1,7 @@
 . c:\vagrant\scripts\wait-for-ad.ps1
+. c:\vagrant\scripts\wait-for-adfs.ps1
 
-sleep 20
-#WARNING dissabling certificate trust check
+#WARNING disabling certificate trust check
 [System.Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}
 
 Add-ADFSRelyingPartyTrust -Name 'keycloak' -MetadataURL 'https://keycloak:8443/auth/realms/oidcrealm/broker/saml/endpoint/descriptor' -IssuanceAuthorizationRules @'
