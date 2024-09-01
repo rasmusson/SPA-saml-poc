@@ -13,13 +13,10 @@ Write-Host "Importing PSPKI into current environment"
 Import-Module -Name PSPKI
 
 Write-Host "Generating Certificate"
-$selfSignedCert = New-SelfSignedCertificateEx `
+$selfSignedCert = New-SelfSignedCertificate `
     -Subject "CN=$fqdn" `
-    -ProviderName "Microsoft Enhanced RSA and AES Cryptographic Provider" `
-    -KeyLength 2048 -FriendlyName 'OAFED SelfSigned' -SignatureAlgorithm sha256 `
-    -EKU "Server Authentication", "Client authentication" `
-    -KeyUsage "KeyEncipherment, DigitalSignature" `
-    -Exportable -StoreLocation "LocalMachine"
+    -KeyUsage "DigitalSignature" `
+    -KeyExportPolicy "Exportable" -CertStoreLocation "Cert:\LocalMachine\My"
 $certThumbprint = $selfSignedCert.Thumbprint
 
 $username = "windomain.local\Administrator"
