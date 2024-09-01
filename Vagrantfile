@@ -21,9 +21,9 @@ Vagrant.configure("2") do |config|
   config.hostmanager.manage_guest = true
 
   config.vm.define "keycloak", autostart: false do |kc|
-    kc.vm.box = "centos/7"
+    kc.vm.box = "ubuntu/jammy64"
     kc.vm.provider "virtualbox" do |v|
-      v.memory = 512
+      v.memory = 1024
       v.cpus = 1
     end
 
@@ -93,9 +93,9 @@ Vagrant.configure("2") do |config|
 
   config.vm.define "react", autostart: false do |r|
 
-    r.vm.box = "centos/7"
+    r.vm.box = "ubuntu/jammy64"
     r.vm.provider "virtualbox" do |v|
-      v.memory = 512
+      v.memory = 1024
       v.cpus = 1
     end
 

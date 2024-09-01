@@ -3,7 +3,8 @@ VERSION=15.0.2
 DOWNLOAD_URL=https://github.com/keycloak/keycloak/releases/download/${VERSION}/keycloak-${VERSION}.tar.gz
 
 echo "Installing Java JDK "
-yum install wget firewalld java-1.8.0-openjdk-devel -y
+apt-get update
+apt-get install wget default-jre -y
 
 
 echo "Downloading Keycloak"
@@ -23,9 +24,7 @@ tar -xzf keycloak.tar.gz -C keycloak --strip-components 1
 
 
 #Opening firewall
-systemctl enable firewalld
-systemctl start firewalld
-firewall-cmd --zone=public --add-port=9990/tcp --permanent
-firewall-cmd --zone=public --add-port=8080/tcp --permanent
-firewall-cmd --zone=public --add-port=8443/tcp --permanent
-firewall-cmd --reload
+ufw enable
+ufw allow 9990
+ufw allow 8080
+ufw allow 8443

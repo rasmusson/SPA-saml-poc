@@ -1,7 +1,7 @@
 export PATH=$PATH:/home/vagrant/keycloak/bin
 
 sudo yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-yum install jq -y
+apt-get install jq -y
 
 sleep 30
 kcadm.sh config credentials --server http://localhost:8080/auth --realm master --user vagrant --password vagrant
