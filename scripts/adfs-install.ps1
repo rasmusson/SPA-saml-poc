@@ -3,3 +3,4 @@
 Write-Host 'Installing ADFS 2'
 
 Install-WindowsFeature adfs-federation
+

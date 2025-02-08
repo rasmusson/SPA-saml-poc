@@ -28,7 +28,7 @@ Vagrant.configure("2") do |config|
     end
 
 
-    kc.vm.hostname = "keycloak"
+    kc.vm.network "forwarded_port", guest: 8080, host: 8180                                                                                                                                 
     kc.vm.network :private_network, ip: "192.168.38.3"
 
     kc.vm.provision :shell, path: "scripts/keycloak-setup.sh"
@@ -41,7 +41,8 @@ Vagrant.configure("2") do |config|
 
   config.vm.define "adfs", autostart: false do |adfs|
     adfs.vbguest.auto_update = true
-    adfs.vm.box = "StefanScherer/windows_2019"
+    adfs.vm.box = "adfs"
+
     adfs.vm.hostname = "adfs"
     adfs.hostmanager.aliases = %w(adfs.devel)
 
@@ -54,25 +55,25 @@ Vagrant.configure("2") do |config|
     adfs.winrm.basic_auth_only = true
 
     #adfs.vm.provision "shell", path: "scripts/fix-second-network.ps1", privileged: false, args: "192.168.38.2"
-    adfs.vm.provision "shell", path: "scripts/adfs-create-domain.ps1", privileged: true
+    # adfs.vm.provision "shell", path: "scripts/adfs-create-domain.ps1", privileged: true
 
-    adfs.vm.provision :host_shell do |host_shell|
-      host_shell.inline = 'sleep 10'
-    end
+    # adfs.vm.provision :host_shell do |host_shell|
+    #   host_shell.inline = 'sleep 10'
+    # end
 
-    adfs.vm.provision "reload"
-    adfs.vm.provision "shell", path: "scripts/adfs-install.ps1", privileged: true
+    # adfs.vm.provision "reload"
+    # adfs.vm.provision "shell", path: "scripts/adfs-install.ps1", privileged: true
 
-    adfs.vm.provision :host_shell do |host_shell|
-      host_shell.inline = 'sleep 10'
-    end
-    adfs.vm.provision "reload"
-    adfs.vm.provision "shell", path: "scripts/adfs-setup.ps1", privileged: true
+    # adfs.vm.provision :host_shell do |host_shell|
+    #   host_shell.inline = 'sleep 10'
+    # end
+    # adfs.vm.provision "reload"
+    # adfs.vm.provision "shell", path: "scripts/adfs-setup.ps1", privileged: true
 
-    adfs.vm.provision :host_shell do |host_shell|
-      host_shell.inline = 'sleep 10'
-    end
-    adfs.vm.provision "reload"
+    # adfs.vm.provision :host_shell do |host_shell|
+    #   host_shell.inline = 'sleep 10'
+    # end
+    # adfs.vm.provision "reload"
 
     adfs.vm.provision "shell", path: "scripts/add-adfs-users.ps1", privileged: true
     adfs.vm.provision "shell", path: "scripts/configure-adfs-keycloak-relying-party.ps1", privileged: true
@@ -91,20 +92,19 @@ Vagrant.configure("2") do |config|
     end
   end
 
-  config.vm.define "react", autostart: false do |r|
+  config.vm.define "app", autostart: false do |r|
 
     r.vm.box = "ubuntu/jammy64"
     r.vm.provider "virtualbox" do |v|
       v.memory = 1024
       v.cpus = 1
     end
+    r.vm.network "forwarded_port", guest: 8080, host: 8080                                                                                                                                 
 
-    r.vm.hostname = "react"
     r.vm.network :private_network, ip: "192.168.38.4"
 
     r.vm.provision :shell, path: "scripts/install-react-demo.sh", privileged: true
     r.vm.provision :shell, path: "scripts/start-react-demo.sh", run: "always", privileged: true
-    r.vm.provision "reload"
 
   end
 end

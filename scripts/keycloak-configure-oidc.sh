@@ -1,6 +1,6 @@
 export PATH=$PATH:/home/vagrant/keycloak/bin
 
-kcadm.sh config credentials --server http://localhost:8080/auth --realm master --user vagrant --password vagrant
+kcadm.sh config credentials --server http://localhost:8080 --realm master --user admin --password admin
 kcadm.sh create realms -s realm=oidcrealm -s enabled=true
 
 
@@ -10,12 +10,8 @@ kcadm.sh set-password -r oidcrealm --username test --new-password test
 kcadm.sh create clients -r oidcrealm -f - << EOF
   {
     "clientId" : "oidc-client",
-    "redirectUris": ["http://react:3000"],
+    "redirectUris": ["http://localhost:8080"],
     "webOrigins": ["+"],
     "standardFlowEnabled": true,
-    "publicClient": true,
-    "attributes":
-      {
-        "pkce.code.challenge.method":"S256"
-      }
+    "publicClient": true
   }

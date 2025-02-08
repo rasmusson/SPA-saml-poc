@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../ADFS-keycloak-docker"
+		},
+		{
+			"path": "../SPA-SAML-demo"
+		},
+		{
+			"path": "../ADFS-keycloak-old-version"
+		}
+	],
+	"settings": {}
+}

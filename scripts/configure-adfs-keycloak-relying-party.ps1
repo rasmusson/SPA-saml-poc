@@ -4,7 +4,7 @@
 #WARNING disabling certificate trust check
 [System.Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}
 
-Add-ADFSRelyingPartyTrust -Name 'keycloak' -MetadataURL 'https://keycloak:8443/auth/realms/oidcrealm/broker/saml/endpoint/descriptor' -IssuanceAuthorizationRules @'
+Add-ADFSRelyingPartyTrust -Name 'keycloak' -MetadataURL 'https://192.168.38.3:8443/realms/oidcrealm/broker/saml/endpoint/descriptor' -IssuanceAuthorizationRules @'
 @RuleTemplate = "AllowAllAuthzRule"
  => issue(Type = "http://schemas.microsoft.com/authorization/claims/permit", Value = "true");
 '@ -IssuanceTransformRules @'

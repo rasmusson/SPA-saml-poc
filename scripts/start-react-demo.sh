@@ -1,3 +1,3 @@
-cd react-oidc-pkce-demo
+cd keycloak-quickstarts/js/spa
 nohup npm start &
-sleep 30
+sleep 5

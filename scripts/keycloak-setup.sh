@@ -1,10 +1,10 @@
-VERSION=15.0.2
+VERSION=26.0.5
 
 DOWNLOAD_URL=https://github.com/keycloak/keycloak/releases/download/${VERSION}/keycloak-${VERSION}.tar.gz
 
 echo "Installing Java JDK "
 apt-get update
-apt-get install wget default-jre -y
+apt-get install wget openjdk-21-jdk -y
 
 
 echo "Downloading Keycloak"
@@ -20,8 +20,12 @@ echo "Installing Keycloak ..."
 mkdir keycloak
 tar -xzf keycloak.tar.gz -C keycloak --strip-components 1
 
-./keycloak/bin/add-user-keycloak.sh -r master -u vagrant -p vagrant
+#./keycloak/bin/add-user-keycloak.sh -r master -u admin -p admin
 
+openssl req -newkey rsa:2048 -nodes \
+  -keyout keycloak-server.key.pem \
+  -x509 -days 3650 -out keycloak-server.crt.pem \
+  -subj "/C=US/ST=State/L=City/O=Organization/OU=Unit/CN=keycloak.example.com"
 
 #Opening firewall
 ufw enable
